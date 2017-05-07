@@ -1,0 +1,25 @@
+{
+  "name": "ss-number",
+  "version": "1.0.0",
+  "description": "Simple Math parser",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib --copy-files",
+    "test": "mocha --compilers js:babel-register test -R spec -s 1700 -t 300000 --recursive",
+    "prepublish": "npm run build"
+  },
+  "author": "Rob Ellis",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "babel-register": "^6.24.1",
+    "mocha": "^3.3.0",
+    "should": "^11.2.1"
+  },
+  "dependencies": {
+    "debug": "^2.6.6",
+    "lodash": "^4.17.4",
+    "safe-eval": "^0.3.0"
+  }
+}
