@@ -8,6 +8,8 @@ import math from '../src/index';
 import conv from '../src/convert';
 
 
+
+
 describe('Convert', () => {
   it('convert word to number', (done) => {
     should(conv.convertWordToNumber("one")).eql(1); // cardinalNumbers case
@@ -31,11 +33,22 @@ describe('Convert', () => {
   })
 
   it('convert numbers to words', (done) => {
+
     should(conv.convertNumberToWord(1)).eql('one');
     should(conv.convertNumberToWord(22)).eql('twenty-two');
-    // TODO.
-    // should(conv.convertNumberToWord(100)).eql('one hundred');
-    // should(conv.convertNumberToWord(130)).eql('one hundred and thirty');
+    should(conv.convertNumberToWord(22.67)).eql('twenty-two point sixty-seven');
+
+    should(conv.convertNumberToWord(0)).eql('zero');
+    should(conv.convertNumberToWord(-5)).eql('negative five');
+    should(conv.convertNumberToWord(-10)).eql('negative ten');
+    should(conv.convertNumberToWord(5)).eql('five');
+    should(conv.convertNumberToWord(12)).eql('twelve');
+
+    should(conv.convertNumberToWord(101)).eql('one hundred and one');
+    should(conv.convertNumberToWord(1001)).eql('one thousand and one');
+    should(conv.convertNumberToWord(1111)).eql('one thousand and one hundred and eleven');
+    should(conv.convertNumberToWord(11035)).eql('eleven thousand and thirty-five');
+    should(conv.convertNumberToWord(111035)).eql('one hundred and eleven thousand and thirty-five');
     done();
   })
 

@@ -129,41 +129,62 @@ const convertWordToNumber = function(word){
   }
 };
 
-const numberLookup = function(number){
+const _sub100 = function(whole) {
+  let number = parseInt(whole);
   let multipleOfTen;
-  let word;
 
-  if (number < 20) {
+  if (number < 20){
     for (let cardinalNumber in cardinalNumbers){
-      if (number == cardinalNumbers[cardinalNumber]){
-        word = cardinalNumber;
-        break;
+      if (whole == cardinalNumbers[cardinalNumber]){
+        return cardinalNumber;
       }
     }
-  } else if (number < 100){
+  } else if (number <= 99){
     if (number % 10 === 0){ // If the number is a multiple of ten
       for (multipleOfTen in multiplesOfTen){
         if (number == multiplesOfTen[multipleOfTen]){
-          word = multipleOfTen;
-          break;
+          return multipleOfTen;
         }
       }
     } else { // not a multiple of ten
       for (multipleOfTen in multiplesOfTen){
         for (let i = 9; i > 0; i--){
           if (number == multiplesOfTen[multipleOfTen] + i){
-            word = multipleOfTen + "-" + convertNumberToWord(i);
-            break;
+            return multipleOfTen + "-" + convertNumberToWord(i);
           }
         }
       }
     }
-  } else {
-    // TODO -
-    console.log("We don't handle numbers greater than 99 yet.");
+  }
+}
+
+// Take a number and convert it to written form
+// Works between -999,999.99 ~ 999,999.99
+const numberLookup = function(number){
+  
+  let wordPhrase = "";
+
+  let snum = String(number).replace(/,/g,"");
+  let [whole, decimal] = snum.split(".");
+  let places = whole.length;
+
+  // 99 or less
+  if (places <= 2) {
+    wordPhrase = _sub100(whole);
+  } else if (places === 3) {
+    let hundredPlace = (whole / 100).toFixed();
+    wordPhrase = _sub100(hundredPlace) + " hundred and " + _sub100(whole - (hundredPlace * 100));
+  } else if (places >= 4 && places <= 6) {
+    let thosandPlace = (whole / 1000).toFixed();
+    let remander = whole - (thosandPlace * 1000);
+    wordPhrase = numberLookup(thosandPlace) + " thousand and " + numberLookup(remander);
   }
 
-  return word;
+  if (decimal) {
+    wordPhrase += " point " + _sub100(decimal);
+  }
+
+  return wordPhrase
 }
 
 const convertNumberToWord = function(number){
