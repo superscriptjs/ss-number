@@ -4,9 +4,6 @@ import mocha from 'mocha';
 import should from 'should/as-function';
 import conv from '../src/convert';
 
-import par from '../src/';
-console.log(par);
-
 describe('Convert', () => {
   it('convert word to number', (done) => {
     should(conv.convertWordToNumber("one")).eql(1); // cardinalNumbers case
