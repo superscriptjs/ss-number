@@ -13,6 +13,7 @@ describe('Number sequence detection', () => {
     done();
   });
 
+
   it('Detect a Geometric pattern', (done) => {
     should(pattern.next([1,3,9,27])).eql(81);
     should(pattern.next([27,9,3])).eql(1);
@@ -39,4 +40,13 @@ describe('Number sequence detection', () => {
     should(pattern.next([8,5,3,2,1,1])).eql(0);
     done();
   });
+
+  it('Detect a Missing Numbers', (done) => {
+    should(pattern.missing([1,2,3,undefined,5,6])).eql(4);
+    should(pattern.missing([2,3,undefined,5,6,7])).eql(4);
+
+    // should(pattern.missing([2,3,undefined,5,6])).eql(4);
+    done();
+  });
+  
 });

@@ -27,6 +27,24 @@ const prev = function(arr){
   return next(arr.reverse());
 }
 
+const missing = function(arr){
+  const length = arr.length - 1;
+  const missing_index = arr.indexOf(undefined);
+
+  // If we can find a long enough sequence lets just use that
+  if (missing_index > 2 || length - missing_index> 2) {
+    if (missing_index > 2) {
+      return next(arr.slice(0,missing_index));
+    } else {
+      return prev(arr.slice(missing_index + 1));
+    }
+  } else {
+    // TODO - make this work.
+    return null; 
+  }
+  
+}
+
 const patternType = function(arr) {
   let ap, gp, sq, cb, fb;
 
@@ -67,5 +85,6 @@ const patternType = function(arr) {
 export default{
   next,
   prev,
-  patternType
+  patternType,
+  missing
 };
