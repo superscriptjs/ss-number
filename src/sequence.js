@@ -16,11 +16,15 @@ const next = function(arr){
     // Step value between cubes.
     let common_ratio = (Math.cbrt(l1) - Math.cbrt(l2))
     return Math.pow((Math.cbrt(l1) + common_ratio), 3);
-  } else if (type === "Fib"){
-    return l1 + l2;
+  } else if (type === "Fibonacci"){
+    return (l1 > l2) ? l1 + l2 : l2 - l1;
   } else {
-    console.log("Something Funky");
+    return null;
   }
+}
+
+const prev = function(arr){
+  return next(arr.reverse());
 }
 
 const patternType = function(arr) {
@@ -46,13 +50,22 @@ const patternType = function(arr) {
   }
   if (cb) return "Cube";
 
+  // Fib up
   for (let i = 0; i < (arr.length - 3); i++) {
     if (!(fb = (arr[i+2] == arr[i] + arr[i+1]))) break;
   }
-  if (fb) return "Fib";
+  if (fb) return "Fibonacci";
+
+  // Fib down
+  for (let i = 0; i < (arr.length - 3); i++) {
+    if (!(fb = (arr[i+2] == arr[i] - arr[i+1]))) break;
+  }
+  if (fb) return "Fibonacci";
   return -1;
 };
 
 export default{
-  next
+  next,
+  prev,
+  patternType
 };
