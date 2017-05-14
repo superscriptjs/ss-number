@@ -29,20 +29,32 @@ const prev = function(arr){
   return next(arr.reverse());
 }
 
+//
+// Given an array, with an undefined slot, we try to satisfy the missing number
+// Returns null or number
 const missing = function(arr){
   const length = arr.length - 1;
   const missing_index = arr.indexOf(undefined);
   const num_premutations = arr[missing_index+1] - arr[missing_index-1];
   let missing_number = null;
+  let pattern_type = null;
+  let set;
+
   for (let x = 0; x <= num_premutations; x++){
-    let test = arr[missing_index-1] + x;
-    arr.splice(missing_index, 1, test);
+    let test_number = arr[missing_index-1] + x;
+    arr.splice(missing_index, 1, test_number);
     let pt = patternType(arr);;
     if (pt !== "None"){
-      missing_number = test;
+      missing_number = test_number;
+      pattern_type = pt;
+      set = _.clone(arr);
     }
   }
-  return missing_number;
+  return {
+    number: missing_number,
+    type: pattern_type,
+    set: set
+  }
 }
 
 const patternType = function(arr, strict) {
