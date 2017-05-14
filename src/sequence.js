@@ -1,5 +1,7 @@
+let _ = require('lodash');
+
 const next = function(arr){
-  let type = patternType(arr);
+  let type = patternType(arr, true);
   let l1 = arr.pop();
   let l2 = arr.pop();
 
@@ -30,56 +32,46 @@ const prev = function(arr){
 const missing = function(arr){
   const length = arr.length - 1;
   const missing_index = arr.indexOf(undefined);
-
-  // If we can find a long enough sequence lets just use that
-  if (missing_index > 2 || length - missing_index> 2) {
-    if (missing_index > 2) {
-      return next(arr.slice(0,missing_index));
-    } else {
-      return prev(arr.slice(missing_index + 1));
+  const num_premutations = arr[missing_index+1] - arr[missing_index-1];
+  let missing_number = null;
+  for (let x = 0; x <= num_premutations; x++){
+    let test = arr[missing_index-1] + x;
+    arr.splice(missing_index, 1, test);
+    let pt = patternType(arr);;
+    if (pt !== "None"){
+      missing_number = test;
     }
-  } else {
-    // TODO - make this work.
-    return null; 
   }
-  
+  return missing_number;
 }
 
-const patternType = function(arr) {
-  let ap, gp, sq, cb, fb;
-
-  for (let i = 0; i < (arr.length - 2); i++) {
-    if(!(ap = arr[i+1] - arr[i] == arr[i+2] - arr[i+1])) break;
+const patternType = function(arr, strict) {
+  let ap = 0, gp = 0, sq = 0, cb = 0, fb1 = 0, fb2 = 0;
+  let total = arr.length - 2;
+  for (let i = 0; i < total; i++) {
+    if (arr[i+1] - arr[i] == arr[i+2] - arr[i+1]) ap++;
+    if (arr[i+1] / arr[i] == arr[i+2] / arr[i+1]) gp++;
+    if (Math.sqrt(arr[i]) % 1 === 0 && Math.sqrt(arr[i+1]) % 1 === 0) sq++;
+    if (Math.cbrt(arr[i]) % 1 === 0 && Math.cbrt(arr[i+1]) % 1 === 0) cb++;
+    if (arr[i+2] == arr[i] + arr[i+1]) fb1++;
+    if (arr[i+2] == arr[i] - arr[i+1]) fb2++;
   }
-  if(ap) return "Arithmetic";
+  
+  let types = [
+    {'name':'Arithmetic', total: ap / total},
+    {'name':'Geometric', total: gp / total},
+    {'name':'Square', total: sq / total},
+    {'name':'Cube', total: cb / total},
+    {'name':'Fibonacci', total: fb1 / total},
+    {'name':'Fibonacci', total: fb2 / total}
+  ];
 
-  for (let i = 0; i < (arr.length - 2); i++) {
-    if(!(gp = arr[i+1] / arr[i] == arr[i+2] / arr[i+1])) break;
+  let type = _.filter(types, function(o) { return o.total === 1});
+  switch(type.length) {
+    case 0: return "None"; break;
+    case 1: return type[0].name; break;
+    default: return (strict) ? type[0].name : "Many";
   }
-  if(gp) return "Geometric";
-
-  for (let i = 0; i < (arr.length - 2); i++) {
-    if (!(sq = Math.sqrt(arr[i]) % 1 === 0 && Math.sqrt(arr[i+1]) % 1 === 0)) break;
-  }
-  if (sq) return "Square";
-
-  for (let i = 0; i < (arr.length - 2); i++) {
-    if (!(cb = Math.cbrt(arr[i]) % 1 === 0 && Math.cbrt(arr[i+1]) % 1 === 0)) break;
-  }
-  if (cb) return "Cube";
-
-  // Fib up
-  for (let i = 0; i < (arr.length - 3); i++) {
-    if (!(fb = (arr[i+2] == arr[i] + arr[i+1]))) break;
-  }
-  if (fb) return "Fibonacci";
-
-  // Fib down
-  for (let i = 0; i < (arr.length - 3); i++) {
-    if (!(fb = (arr[i+2] == arr[i] - arr[i+1]))) break;
-  }
-  if (fb) return "Fibonacci";
-  return -1;
 };
 
 export default{
