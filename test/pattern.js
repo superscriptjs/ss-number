@@ -2,7 +2,7 @@
 
 import mocha from 'mocha';
 import should from 'should/as-function';
-import pattern from '../src/sequence';
+import pattern from '../src/pattern';
 
 describe('Number sequence detection', () => {
   it('Detect a Arithmetic pattern', (done) => {
