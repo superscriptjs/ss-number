@@ -35,3 +35,5 @@ math.parse("What is seven times eight".split(" ")); // 56
 math.parse("What is a third of 6".split(" ")); // 2
 math.parse("What is the square root of 3 x 3 ".split(" ")); // 3
 ```
+
+See the tests for more examples.
