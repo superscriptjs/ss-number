@@ -1,7 +1,7 @@
 
-import conv from '../src/convert';
-import math from '../src/expression';
-import pattern from '../src/pattern';
+import conv from './convert';
+import math from './expression';
+import pattern from './pattern';
 
 export default{
   cardPlural: conv.cardPlural,
