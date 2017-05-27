@@ -27,7 +27,7 @@ const parse = function(words, prev){
   let word;
   let square = false;
 
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i++){
     // Convert words from word form to digit form.
     let digit = conv.convertWordToNumber(words[i]);
     if (digit !== undefined) {
@@ -38,6 +38,14 @@ const parse = function(words, prev){
     // Convert word expression to evaluated equivilant.
     if (mathExpressionSubs[word] !== undefined){
       words[i] = mathExpressionSubs[word];
+    }
+  }
+
+  // Fix other oddities
+  for (let i = 0; i < words.length; i++){
+    if (words[i] === '3' && words[i+1] === 'rd'){
+      words[i] = 'third';
+      words.splice(i+1,1);
     }
   }
 

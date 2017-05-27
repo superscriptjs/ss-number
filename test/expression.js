@@ -47,6 +47,13 @@ describe('Parse expression', () => {
     done();
   });
 
+  it('fraction', (done) => {
+    const ans = math.parse("What is a 3 rd of 6".split(" "));
+    should(ans).equal(2);
+    done();
+  });
+
+
   it('square root', (done) => {
     const ans = math.parse("What is the square root of 9".split(" "));
     should(ans).equal(3);
