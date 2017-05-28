@@ -46,14 +46,25 @@ describe('Number sequence detection', () => {
   });
 
   it('Detect a Missing Numbers', (done) => {
-    should(pattern.missing([1,2,3,undefined,5,6])).eql({number:4, type:'Arithmetic', set:[1,2,3,4,5,6]});
-    should(pattern.missing([2,3,undefined,5,6,7])).eql({number:4, type:'Arithmetic', set:[2,3,4,5,6,7]});
-    should(pattern.missing([0,1,undefined,2])).eql({number:1, type:'Many', set:[0,1,1,2]});
-    should(pattern.missing([0,1,undefined,2,3])).eql({number:1, type:'Fibonacci', set:[0,1,1,2,3]});
-    should(pattern.missing([10,20,undefined,40,50])).eql({number:30, type:'Arithmetic', set:[10,20,30,40,50]});
-    should(pattern.missing([4,6,undefined,10])).eql({number:8, type:'Arithmetic', set:[4,6,8,10]});
-    should(pattern.missing([4,6,undefined,16])).eql({number:10, type:'Fibonacci', set:[4,6,10,16]});
+    should(pattern.missing([1,3])).eql({number:2, type:'Many', set:[1,2,3]});
+    should(pattern.missing([2,3,5,6,7])).eql({number:4, type:'Arithmetic', set:[2,3,4,5,6,7]});
+    should(pattern.missing([0,1,2])).eql({number:1, type:'Many', set:[0,1,1,2]});
+    should(pattern.missing([0,1,2,3])).eql({number:1, type:'Fibonacci', set:[0,1,1,2,3]});
+    should(pattern.missing([10,20,40,50])).eql({number:30, type:'Arithmetic', set:[10,20,30,40,50]});
+    should(pattern.missing([4,6,10])).eql({number:8, type:'Arithmetic', set:[4,6,8,10]});
+    should(pattern.missing([4,6,16])).eql({number:10, type:'Fibonacci', set:[4,6,10,16]});
     done();
   });
+
+  // it('Detect a Missing Numbers', (done) => {
+  //   should(pattern.missing([1,2,3,undefined,5,6])).eql({number:4, type:'Arithmetic', set:[1,2,3,4,5,6]});
+  //   should(pattern.missing([2,3,undefined,5,6,7])).eql({number:4, type:'Arithmetic', set:[2,3,4,5,6,7]});
+  //   should(pattern.missing([0,1,undefined,2])).eql({number:1, type:'Many', set:[0,1,1,2]});
+  //   should(pattern.missing([0,1,undefined,2,3])).eql({number:1, type:'Fibonacci', set:[0,1,1,2,3]});
+  //   should(pattern.missing([10,20,undefined,40,50])).eql({number:30, type:'Arithmetic', set:[10,20,30,40,50]});
+  //   should(pattern.missing([4,6,undefined,10])).eql({number:8, type:'Arithmetic', set:[4,6,8,10]});
+  //   should(pattern.missing([4,6,undefined,16])).eql({number:10, type:'Fibonacci', set:[4,6,10,16]});
+  //   done();
+  // });
   
 });

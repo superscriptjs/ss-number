@@ -29,13 +29,38 @@ const prev = function(arr){
   return next(arr.reverse());
 }
 
-//
+
+const missing = function(arr){
+  const length = arr.length - 1;
+  var results = [];
+  for (let x = 1; x <= length; x++){
+    let new_array = _.clone(arr);
+    new_array.splice(x,0,undefined);
+    let pattern = _missing(new_array);
+    if (pattern.type !== null){
+      let n = _.some(results, function(t){
+        return t.number === pattern.number
+      });
+
+      if (n === false) results.push(pattern);
+    }
+  }
+
+  var array = Array.from(results);
+  if (array.length === 1){
+    return array[0];
+  } else {
+    console.log(array)
+    return array[0];
+  }
+}
 // Given an array, with an undefined slot, we try to satisfy the missing number
 // Returns null or number
-const missing = function(arr){
+const _missing = function(arr){
   const length = arr.length - 1;
   const missing_index = arr.indexOf(undefined);
   const num_premutations = arr[missing_index+1] - arr[missing_index-1];
+
   let missing_number = null;
   let pattern_type = null;
   let set;
